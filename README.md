@@ -1,6 +1,13 @@
-# temp
+# certificate auth test
+
+Goal: create a functional CA
 
 Install docker, python.
+
+```sh
+sudo python main.py
+```
+at the curl stage, this should work. (it doesn't work)
 
 All the tutorials and stack exchanges.
 - [Create Your Own SSL Certificate Authority for Local HTTPS Development](https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/)
