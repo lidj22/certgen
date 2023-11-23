@@ -25,5 +25,3 @@ openssl x509 -req -in ./out/server.csr \
     -days 825 \
     -sha256 \
     -extfile server.ext
-
-docker build -t cert-test . && docker run --rm -p 443:443 cert-test
