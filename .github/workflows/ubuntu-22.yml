@@ -1,0 +1,11 @@
+
+name: Certificate Authority Test Ubuntu-22.04
+run-name: Test certificate authority creation on Ubuntu 22.04 by @${{ github.actor }}
+on: [push]
+
+jobs:
+    Test-Sudo:
+        runs-on: ubuntu-22.04
+        steps:
+            - run: sudo echo "hello world"
+
