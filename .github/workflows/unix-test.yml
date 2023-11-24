@@ -1,11 +1,11 @@
 
-name: Certificate Authority Test Ubuntu-22.04
-run-name: Test certificate authority creation on Ubuntu 22.04 by @${{ github.actor }}
+name: Certificate Authority Test
+run-name: Test certificate authority creation by @${{ github.actor }}
 on: [push]
 
 jobs:
-    ubuntu-22:
-        runs-on: ubuntu-22.04
+    unix-matrix:
+        runs-on: [ubuntu-22.04, macos-latest]
         steps:
             -   name: checkout repo
                 uses: actions/checkout@v2
