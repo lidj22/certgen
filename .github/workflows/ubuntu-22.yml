@@ -6,8 +6,6 @@ on: [push]
 jobs:
     ubuntu-22:
         runs-on: ubuntu-22.04
-        env:
-            working-directory: /home/runner/work/certificate-mess/certificate-mess
         steps:
             -   name: checkout repo
                 uses: actions/checkout@v2
