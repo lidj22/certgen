@@ -7,6 +7,6 @@ jobs:
     ubuntu-22:
         runs-on: ubuntu-22.04
         env:
-            working-directory: ./
+            working-directory: /home/runner/work/certificate-mess/certificate-mess
         steps:
             - run: sudo python main.py
