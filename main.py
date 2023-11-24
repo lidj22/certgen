@@ -28,9 +28,11 @@ if is_linux:
 
 subprocess.run(["docker", "build", "-t", "cert-test", "."])
 logger.info("Passed container build stage.")
+time.sleep(1)
 
 subprocess.run(["docker", "run", "-d", "-p", "443:443", "--name", "cert-test", "cert-test"])
 logger.info("Passed container run stage.")
+time.sleep(1)
 
 subprocess.run(["curl", "https://localhost:443"])
 
