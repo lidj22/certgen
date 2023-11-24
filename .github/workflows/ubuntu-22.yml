@@ -9,4 +9,13 @@ jobs:
         env:
             working-directory: /home/runner/work/certificate-mess/certificate-mess
         steps:
-            - run: sudo python main.py
+            -   name: checkout repo
+                uses: actions/checkout@v2
+
+            -   name: setup python
+                uses: actions/setup-python@v4
+                with:
+                    python-version: '3.10'
+            
+            -   name: run
+                run: sudo python main.py
