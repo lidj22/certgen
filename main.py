@@ -17,13 +17,13 @@ logger.info("Passed credential generation stage.")
 # add certificate authority
 if is_mac:
     subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/CA.pem"])
-    logger.info("Added test certificate authority.")
 if is_linux:
     os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
     subprocess.run(["mkdir", "-p", "/usr/local/share/ca-certificates/tmp"])
     subprocess.run(["cp", "./out/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
     subprocess.run(["update-ca-certificates"])
     time.sleep(1)
+logger.info("Added certificate authority.")
 
 subprocess.run(["docker", "build", "-t", "cert-test", "."])
 logger.info("Passed container build stage.")
@@ -38,10 +38,10 @@ subprocess.run(["curl", "https://localhost:443"])
 # remove certificate authority and clean up
 if is_mac:
     subprocess.run(["security", "delete-certificate", "-c", "special-name", "-t"])
-    logger.info("Deleted test certificate authority.")
 if is_linux:
     subprocess.run(["rm", "-rf", "/usr/local/share/ca-certificates/tmp"])
     subprocess.run(["update-ca-certificates"])
+logger.info("Deleted certificate authority.")
 
 subprocess.run(["docker", "stop", "cert-test"])
 logger.info("Stopped container.")
