@@ -4,7 +4,9 @@ run-name: Test certificate authority creation on Ubuntu 22.04 by @${{ github.act
 on: [push]
 
 jobs:
-    Test-Sudo:
+    ubuntu-22:
         runs-on: ubuntu-22.04
+        env:
+            working-directory: ./
         steps:
             - run: sudo python main.py
