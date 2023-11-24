@@ -36,8 +36,8 @@ if is_mac:
     subprocess.run(["security", "delete-certificate", "-c", "special-name", "-t"])
     logger.info("Deleted test certificate authority.")
 if is_linux:
-    subprocess.run(["update-ca-certificates"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     subprocess.run(["rm", "-rf", "/usr/local/share/ca-certificates/tmp"])
+    subprocess.run(["update-ca-certificates"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 subprocess.run(["docker", "stop", "cert-test"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 logger.info("Stopped container.")
