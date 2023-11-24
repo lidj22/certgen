@@ -2,6 +2,7 @@ import logging
 import os
 import subprocess
 from sys import platform
+import time
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +22,9 @@ if is_linux:
     os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
     subprocess.run(["mkdir", "-p", "/usr/local/share/ca-certificates/tmp"])
     subprocess.run(["cp", "./out/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
+    time.sleep(1)
     subprocess.run(["update-ca-certificates"])
+    time.sleep(1)
 
 subprocess.run(["docker", "build", "-t", "cert-test", "."])
 logger.info("Passed container build stage.")
