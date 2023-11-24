@@ -7,5 +7,4 @@ jobs:
     Test-Sudo:
         runs-on: ubuntu-22.04
         steps:
-            - run: sudo echo "hello world"
-
+            - run: sudo python main.py

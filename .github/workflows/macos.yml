@@ -1,0 +1,11 @@
+
+name: Certificate Authority Test MacOS
+run-name: Test certificate authority creation on MacOS by @${{ github.actor }}
+on: [push]
+
+jobs:
+    Test-Sudo:
+        runs-on: macos-latest
+        steps:
+            - run: sudo python main.py
+
