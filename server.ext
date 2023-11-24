@@ -3,8 +3,5 @@ basicConstraints=CA:FALSE
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 
-[v3_req]
-extendedKeyUsage = serverAuth
-
 [alt_names]
 DNS.1 = localhost

@@ -24,5 +24,4 @@ openssl x509 -req -in ./out/server.csr \
     -out ./out/server.crt \
     -days 825 \
     -sha256 \
-    -extfile server.ext \
-    -extensions v3_req
+    -extfile server.ext
