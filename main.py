@@ -1,8 +1,10 @@
 import logging
+import requests
 import os
 import subprocess
 from sys import platform
 import time
+import traceback
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -10,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger.info("Starting script.")
 is_mac = platform == "darwin"
 is_linux = platform == "linux"
+is_success = False
 
 subprocess.call("./scripts/generate.sh")
 logger.info("Passed credential generation stage.")
@@ -33,7 +36,14 @@ subprocess.run(["docker", "run", "-d", "-p", "443:443", "--name", "cert-test", "
 logger.info("Passed container run stage.")
 time.sleep(1)
 
-subprocess.run(["curl", "https://localhost:443"])
+logger.info("Testing validity of server certificate induced by certificate authority...")
+try:
+    response = requests.get("https://localhost:443")
+    if response.status_code == 200:
+        is_success = True
+except Exception as e:
+    logger.error(traceback.format_exc())
+# subprocess.run(["curl", "https://localhost:443"])
 
 # remove certificate authority and clean up
 if is_mac:
@@ -48,3 +58,10 @@ logger.info("Stopped container.")
 
 subprocess.run(["docker", "container", "rm", "cert-test"])
 logger.info("Removed container.")
+
+# resolve
+if is_success:
+    logger.info("Successfully validated certificate authority and cleaned everything up.")
+else:
+    logger.error("Failed to validate certificate authority.")
+    raise requests.exceptions.SSLError
