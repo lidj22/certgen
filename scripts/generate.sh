@@ -8,7 +8,7 @@ openssl req -x509 \
     -new \
     -nodes \
     -key ./out/CA.key \
-    -sha256 -days 365 \
+    -sha256 -days 825 \
     -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=testCA"\
     -out ./out/CA.pem
 
