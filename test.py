@@ -84,29 +84,10 @@ def main():
 
     # generate certificates.
     generate.generate_certificates_from_config(
+        config_path="./config/test.yaml",
         regenerate_certificate_authority=True,
         regenerate_certificates=True,
     )
-
-    # generate.generate_certificate_authority(
-    #     site="test",
-    #     ca_common_name="testCA",
-    #     ca_country="NA",
-    #     ca_state="NA",
-    #     ca_org="org",
-    #     ca_org_unit="orgu",
-    #     ca_valid_days=825,
-    # )
-    # generate.generate_server_certificate(
-    #     site="test",
-    #     common_name="testServer",
-    #     country="NA",
-    #     state="NA",
-    #     loc="NA",
-    #     org="org",
-    #     org_unit="orgu",
-    #     valid_days=825,
-    # )
 
     # add certificate authority
     add_certificate_authority()
@@ -116,8 +97,8 @@ def main():
     httpd = HTTPServer(("localhost", 443), Handler)
     httpd.socket = ssl.wrap_socket(
         httpd.socket,
-        certfile="./out/test/servers/server.crt",
-        keyfile="./out/test/servers/server.key",
+        certfile="./out/test/servers/testServer.crt",
+        keyfile="./out/test/servers/testServer.key",
         server_side=True,
     )
     servt = threading.Thread(target=httpd.serve_forever)

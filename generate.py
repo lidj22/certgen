@@ -1,3 +1,5 @@
+import argparse
+
 import os
 import subprocess
 from typing import List
@@ -152,3 +154,26 @@ def generate_certificates_from_config(
             subject_alt_name_list=subject_alt_names,
             regenerate=regenerate_certificates,
         )
+
+    return config
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, help="Path to config yaml file.", default="./config/test.yaml")
+    parser.add_argument("--regenerate", action="store_true", help="Regenerate server certificates.")
+    parser.add_argument("--regenerate-ca", action="store_true", help="Regenerate certificate authorities.")
+
+    args = parser.parse_args()
+
+    config_path: str = args.config
+    regenerate_servers = args.regenerate
+    regenerate_ca = args.regenerate_ca
+
+    generate_certificates_from_config(
+        config_path=config_path, 
+        regenerate_certificate_authority=regenerate_ca, 
+        regenerate_certificates=regenerate_servers
+    )
+
+if __name__ == "__main__":
+    main()
