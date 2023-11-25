@@ -28,7 +28,7 @@ class Handler(SimpleHTTPRequestHandler):
 
 def add_certificate_authority():
     if is_mac:
-        subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/certificate-authority/CA.pem"])
+        subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/test/certificate-authority/CA.pem"])
     if is_linux:
         os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
         subprocess.run(["cp", "./out/test/certificate-authority/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
