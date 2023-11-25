@@ -68,6 +68,7 @@ except Exception as e:
 
 # request test
 try:
+    os.environ["REQUESTS_CA_BUNDLE"] = f"{os.path.curdir}/out/CA.pem"
     response = requests.get(
         "https://localhost:443",
         # verify=False,
