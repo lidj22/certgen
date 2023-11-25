@@ -9,13 +9,13 @@ openssl req -x509 \
     -nodes \
     -key ./out/CA.key \
     -sha256 -days 365 \
-    -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=special-name"\
+    -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=testCA"\
     -out ./out/CA.pem
 
 # server certificate
 openssl genrsa -out ./out/server.key 2048
 openssl req -new -key ./out/server.key \
-    -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=special-name"\
+    -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=testServer"\
     -out ./out/server.csr
     
 echo "extendedKeyUsage = serverAuth

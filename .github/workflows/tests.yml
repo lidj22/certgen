@@ -4,7 +4,7 @@ run-name: Test certificate authority creation by @${{ github.actor }}
 on: [push]
 
 jobs:
-    ubuntu-22:
+    ubuntu:
         runs-on: ubuntu-22.04
         steps:
             -   name: checkout repo
