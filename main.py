@@ -18,7 +18,7 @@ is_mac = platform == "darwin"
 is_linux = platform == "linux"
 is_success = False
 
-class SimpleHTTPRequestHandler(SimpleHTTPRequestHandler):
+class Handler(SimpleHTTPRequestHandler):
     def do_GET(self) -> None:
         self.send_response(200)
         self.end_headers()
@@ -38,7 +38,7 @@ logger.info("Added certificate authority.")
 
 # load web server
 logger.info("Setting up HTTPS server on port 443.")
-httpd = HTTPServer(("localhost", 443), SimpleHTTPRequestHandler)
+httpd = HTTPServer(("localhost", 443), Handler)
 httpd.socket = ssl.wrap_socket(
     httpd.socket,
     certfile="./out/server.crt",
