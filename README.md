@@ -8,12 +8,9 @@ Project Goal: create a functional certificate authority
 | Ubuntu 22 | yes |
 
 ## Usage
-Install [Docker](https://docs.docker.com/engine/install/).
-
 ```sh
 sudo python main.py
 ```
-At the `curl` stage, the expected output should resemble the nginx welcome page.
 
 ## Resources
 All the tutorials and stack exchanges.
