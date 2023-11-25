@@ -1,5 +1,6 @@
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import ssl
+import threading
 
 import logging
 import requests
@@ -9,11 +10,6 @@ from sys import platform
 import time
 import traceback
 
-class SimpleHTTPRequestHandler(SimpleHTTPRequestHandler):
-    def do_GET(self) -> None:
-        self.send_response(200)
-        self.end_headers()
-
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -21,6 +17,11 @@ logger.info("Starting script.")
 is_mac = platform == "darwin"
 is_linux = platform == "linux"
 is_success = False
+
+class SimpleHTTPRequestHandler(SimpleHTTPRequestHandler):
+    def do_GET(self) -> None:
+        self.send_response(200)
+        self.end_headers()
 
 subprocess.call("./scripts/generate.sh")
 logger.info("Passed credential generation stage.")
@@ -44,6 +45,8 @@ httpd.socket = ssl.wrap_socket(
     keyfile="./out/server.key",
     server_side=True,
 )
+servt = threading.Thread(target=httpd.serve_forever)
+servt.start()
 logger.info("HTTPS server setup complete.")
 
 logger.info("Testing validity of server certificate induced by certificate authority...")
@@ -65,6 +68,7 @@ logger.info("Deleted certificate authority.")
 # stop web server
 logger.info("Shutting down HTTPS server...")
 httpd.shutdown()
+servt.join()
 
 # resolve
 if is_success:
