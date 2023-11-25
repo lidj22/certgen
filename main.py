@@ -1,3 +1,7 @@
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+import ssl
+import threading
+
 import logging
 import requests
 import os
@@ -14,6 +18,11 @@ is_mac = platform == "darwin"
 is_linux = platform == "linux"
 is_success = False
 
+class SimpleHTTPRequestHandler(SimpleHTTPRequestHandler):
+    def do_GET(self) -> None:
+        self.send_response(200)
+        self.end_headers()
+
 subprocess.call("./scripts/generate.sh")
 logger.info("Passed credential generation stage.")
 
@@ -22,19 +31,23 @@ if is_mac:
     subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/CA.pem"])
 if is_linux:
     os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
-    subprocess.run(["mkdir", "-p", "/usr/local/share/ca-certificates/tmp"])
     subprocess.run(["cp", "./out/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
     subprocess.run(["update-ca-certificates"])
     time.sleep(1)
 logger.info("Added certificate authority.")
 
-subprocess.run(["docker", "build", "-t", "cert-test", "."])
-logger.info("Passed container build stage.")
-time.sleep(1)
-
-subprocess.run(["docker", "run", "-d", "-p", "443:443", "--name", "cert-test", "cert-test"])
-logger.info("Passed container run stage.")
-time.sleep(1)
+# load web server
+logger.info("Setting up HTTPS server on port 443.")
+httpd = HTTPServer(("localhost", 443), SimpleHTTPRequestHandler)
+httpd.socket = ssl.wrap_socket(
+    httpd.socket,
+    certfile="./out/server.crt",
+    keyfile="./out/server.key",
+    server_side=True,
+)
+servt = threading.Thread(target=httpd.serve_forever)
+servt.start()
+logger.info("HTTPS server setup complete.")
 
 logger.info("Testing validity of server certificate induced by certificate authority...")
 try:
@@ -43,7 +56,6 @@ try:
         is_success = True
 except Exception as e:
     logger.error(traceback.format_exc())
-# subprocess.run(["curl", "https://localhost:443"])
 
 # remove certificate authority and clean up
 if is_mac:
@@ -53,11 +65,10 @@ if is_linux:
     subprocess.run(["update-ca-certificates"])
 logger.info("Deleted certificate authority.")
 
-subprocess.run(["docker", "stop", "cert-test"])
-logger.info("Stopped container.")
-
-subprocess.run(["docker", "container", "rm", "cert-test"])
-logger.info("Removed container.")
+# stop web server
+logger.info("Shutting down HTTPS server...")
+httpd.shutdown()
+servt.join()
 
 # resolve
 if is_success:

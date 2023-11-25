@@ -17,11 +17,13 @@ openssl genrsa -out ./out/server.key 2048
 openssl req -new -key ./out/server.key \
     -subj "/C=NA/ST=NA/L=NA/O=org/OU=orgunit/CN=special-name"\
     -out ./out/server.csr
-openssl x509 -req -in ./out/server.csr \
+    
+echo "extendedKeyUsage = serverAuth
+subjectAltName=DNS:localhost" | openssl x509 -req -in ./out/server.csr \
     -CA ./out/CA.pem \
     -CAkey ./out/CA.key \
     -CAcreateserial \
     -out ./out/server.crt \
     -days 825 \
     -sha256 \
-    -extfile server.ext
+    -extfile /dev/stdin > /dev/null
