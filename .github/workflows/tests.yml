@@ -21,19 +21,19 @@ jobs:
             -   name: run
                 run: sudo python main.py
 
-    macos:
-        runs-on: macos-latest
-        steps:
-            -   name: checkout repo
-                uses: actions/checkout@v2
+    # macos:
+    #     runs-on: macos-latest
+    #     steps:
+    #         -   name: checkout repo
+    #             uses: actions/checkout@v2
 
-            -   name: setup python
-                uses: actions/setup-python@v4
-                with:
-                    python-version: '3.10'
+    #         -   name: setup python
+    #             uses: actions/setup-python@v4
+    #             with:
+    #                 python-version: '3.10'
             
-            -   name: requirements
-                run: python -m pip install --upgrade pip && pip install -r requirements.txt
+    #         -   name: requirements
+    #             run: python -m pip install --upgrade pip && pip install -r requirements.txt
 
-            -   name: run
-                run: sudo python main.py
+    #         -   name: run
+    #             run: sudo python main.py
