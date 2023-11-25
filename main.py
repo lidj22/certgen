@@ -22,7 +22,6 @@ if is_mac:
     subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/CA.pem"])
 if is_linux:
     os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
-    subprocess.run(["mkdir", "-p", "/usr/local/share/ca-certificates/tmp"])
     subprocess.run(["cp", "./out/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
     subprocess.run(["update-ca-certificates"])
     time.sleep(1)
