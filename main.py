@@ -68,7 +68,10 @@ except Exception as e:
 
 # request test
 try:
-    response = requests.get("https://localhost:443")
+    response = requests.get(
+        "https://localhost:443",
+        # verify=False,
+    )
     if response.status_code == 200:
         logger.info("Passed requests test.")
         is_requests_success = True
