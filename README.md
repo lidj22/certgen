@@ -2,10 +2,10 @@
 
 Project Goal: create a functional certificate authority
 
-| OS | Curl Works | Requests Works | Safari Works |
+| OS | Curl Works | Requests Works | Nginx Works |
 | - | - | - | - |
-| OSX | yes | yes | no |
-| Ubuntu 22 | yes | yes | no |
+| OSX | yes | yes | yes |
+| Ubuntu 22 | yes | yes | yes |
 
 ## Usage
 ```sh
