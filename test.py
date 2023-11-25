@@ -27,10 +27,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 def add_certificate_authority():
     if is_mac:
-        subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/CA.pem"])
+        subprocess.run(["security", "add-trusted-cert", "-d", "-r", "trustRoot", "-k", "/Library/Keychains/System.keychain", "./out/certificate-authority/CA.pem"])
     if is_linux:
         os.makedirs("/usr/local/share/ca-certificates/tmp", exist_ok=True)
-        subprocess.run(["cp", "./out/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
+        subprocess.run(["cp", "./out/test/certificate-authority/CA.pem", "/usr/local/share/ca-certificates/tmp/CA.crt"])
         subprocess.run(["update-ca-certificates"])
         time.sleep(1)
     logger.info("Added certificate authority.")
@@ -60,7 +60,7 @@ def run_curl_test() -> bool:
 def run_request_test() -> bool:
     _is_request_success = False
     try:
-        os.environ["REQUESTS_CA_BUNDLE"] = f"{os.path.curdir}/out/CA.pem"
+        os.environ["REQUESTS_CA_BUNDLE"] = f"{os.path.curdir}/out/test/certificate-authority/CA.pem"
         response = requests.get(
             "https://localhost:443",
             # verify=False,
@@ -93,8 +93,8 @@ def main():
     httpd = HTTPServer(("localhost", 443), Handler)
     httpd.socket = ssl.wrap_socket(
         httpd.socket,
-        certfile="./out/server.crt",
-        keyfile="./out/server.key",
+        certfile="./out/test/servers/server.crt",
+        keyfile="./out/test/servers/server.key",
         server_side=True,
     )
     servt = threading.Thread(target=httpd.serve_forever)
