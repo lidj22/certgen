@@ -4,8 +4,8 @@ Project Goal: create a functional certificate authority
 
 | OS | Curl Works | Requests Works | Safari Works |
 | - | - | - | - |
-| OSX | yes | yes | - |
-| Ubuntu 22 | yes | yes | - |
+| OSX | yes | yes | no |
+| Ubuntu 22 | yes | yes | no |
 
 ## Usage
 ```sh
