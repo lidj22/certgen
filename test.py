@@ -10,6 +10,8 @@ from sys import platform
 import time
 import traceback
 
+import generate
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -79,8 +81,9 @@ def main():
         logger.error("Root privileges is required to run this script.")
         exit(1)
 
-    subprocess.call("./scripts/generate.sh")
-    logger.info("Passed credential generation stage.")
+    # generate certificates.
+    generate.generate_certificate_authority()
+    generate.generate_server_certificate()
 
     # add certificate authority
     add_certificate_authority()

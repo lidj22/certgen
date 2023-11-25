@@ -8,8 +8,12 @@ Project Goal: create a functional certificate authority
 | Ubuntu 22 | yes | yes | yes |
 
 ## Usage
+
+### Test
+
+Test the certificate generation process:
 ```sh
-sudo python main.py
+sudo python test.py
 ```
 
 ## Resources
