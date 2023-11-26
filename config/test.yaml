@@ -1,0 +1,21 @@
+site-name: test
+
+certificate-authority:
+  common_name: testCA
+  country: NA
+  state: NA
+  loc: loc
+  org: org
+  org_unit: orgu
+  valid_days: 825
+
+servers:
+  - common_name: testServer
+    country: NA
+    state: NA
+    loc: loc
+    org: org
+    org_unit: orgu
+    valid_days: 825
+    subject_alt_names:
+      - "DNS:localhost"

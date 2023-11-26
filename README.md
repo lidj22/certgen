@@ -1,6 +1,9 @@
 # Certificate Authority Tests
 
-Project Goal: create a functional certificate authority
+Goals:
+
+- Create a functional certificate authority
+- Configurable CA and server certificate generation
 
 | OS | Curl Works | Requests Works | Nginx Works |
 | - | - | - | - |
@@ -8,8 +11,12 @@ Project Goal: create a functional certificate authority
 | Ubuntu 22 | yes | yes | yes |
 
 ## Usage
+
+### Test
+
+Test the certificate generation process:
 ```sh
-sudo python main.py
+sudo python test.py
 ```
 
 ## Resources
