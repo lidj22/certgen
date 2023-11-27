@@ -17,3 +17,8 @@ echo "{EXT_FILE}" | openssl x509 -req -in {SERVER_DIR}/{COMMON_NAME}.csr \
     -days {VALID_DAYS} \
     -sha256 \
     -extfile /dev/stdin > /dev/null
+
+# permissions
+chmod 600 {SERVER_DIR}/{COMMON_NAME}.key
+chmod 600 {SERVER_DIR}/{COMMON_NAME}.csr
+chmod 600 {SERVER_DIR}/{COMMON_NAME}.crt

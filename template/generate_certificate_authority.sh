@@ -11,3 +11,7 @@ openssl req -x509 \
     -sha256 -days {CA_VALID_DAYS} \
     -subj "/C={CA_COUNTRY}/ST={CA_STATE}/L={CA_LOC}/O={CA_ORG}/OU={CA_ORGU}/CN={CA_COMMON_NAME}"\
     -out {CA_DIR}/CA.pem
+
+# permissions
+chmod 600 {CA_DIR}/CA.key
+chmod 600 {CA_DIR}/CA.pem
