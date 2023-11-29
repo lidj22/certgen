@@ -12,6 +12,20 @@ Goals:
 
 ## Usage
 
+Generate certificates from config (e.g. `test.yaml`):
+```sh
+python generate.py --config ./config/test.yaml
+```
+
+Regenerate certificates:
+```sh
+python generate.py --regenerate ...
+```
+Regenerate CA:
+```sh
+python generate.py --regenerate-ca ...
+```
+
 ### Test
 
 Test the certificate generation process:
